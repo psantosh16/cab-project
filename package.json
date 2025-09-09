@@ -1,9 +1,9 @@
 {
   "name": "pmo",
-  "private": "true",
+  "private": true,
   "scripts": {
     "frontend:dev": "npm --prefix frontend install && npm --prefix frontend run start",
-    "backend:dev:mvn": "cd backend && mvnw spring-boot:run",
+    "backend:dev:mvn": "powershell -Command \"$env:JAVA_HOME='C:\\software\\jdk-21.0.7'; $env:Path += ';' + $env:JAVA_HOME + '\\bin'; cd backend; ./mvnw spring-boot:run\"",
     "start": "concurrently \"npm run frontend:dev\" \"npm run backend:dev:mvn\""
   },
   "devDependencies": {
