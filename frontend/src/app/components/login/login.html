@@ -1,0 +1,30 @@
+<div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <img src="/logo.png" alt="Company Logo" width="100" height="80" />
+        <hr />
+        <h2>Login</h2>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" [class.invalid]="submitted && f.email.invalid" />
+            <div class="error" *ngIf="submitted && f.email.errors">
+                <span *ngIf="f.email.errors.required">Email is required.</span>
+                <span *ngIf="f.email.errors.email">Invalid email format.</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" formControlName="password"
+                [class.invalid]="submitted && f.password.invalid" />
+            <div class="error" *ngIf="submitted && f.password.errors">
+                <span *ngIf="f.password.errors.required">Password is required.</span>
+                <span *ngIf="f.password.errors.minlength">
+                    Password must be at least 6 characters.
+                </span>
+            </div>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+</div>
