@@ -1,0 +1,223 @@
+<div class="min-h-screen bg-gray-100">
+  <!-- Top Navigation Bar -->
+  <nav class="bg-white shadow-lg border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo/Brand -->
+        <div class="flex items-center">
+          <img src="/logo.png" alt="Company Logo" class="h-8 w-auto mr-3" />
+          <h1 class="text-xl font-semibold text-gray-900">CAB Portal</h1>
+        </div>
+
+        <!-- User Info and Actions -->
+        <div class="flex items-center space-x-4">
+          <!-- User Details -->
+          <div class="text-right">
+            <p class="text-sm font-medium text-gray-900">{{ userName }}</p>
+            <p class="text-xs text-gray-500">{{ userEmail }}</p>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex space-x-2">
+            <button
+              routerLink="/dashboard"
+              class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+              Dashboard
+            </button>
+            <button
+              (click)="onLogout()"
+              class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Form Content -->
+  <div class="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="bg-white shadow-lg rounded-lg p-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Submit Change Request</h2>
+      
+      <form [formGroup]="changeRequestForm" (ngSubmit)="onSubmit()" novalidate>
+        <!-- Title Field -->
+        <div class="mb-6">
+          <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Title *</label>
+          <input
+            type="text"
+            id="title"
+            formControlName="title"
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="submitted && f['title'].invalid"
+            placeholder="Enter change request title" />
+          <div class="text-red-500 text-sm mt-1" *ngIf="submitted && f['title'].errors">
+            <span *ngIf="f['title'].errors?.['required']">Title is required.</span>
+            <span *ngIf="f['title'].errors?.['minlength']">Title must be at least 5 characters.</span>
+          </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="mb-6">
+          <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="4"
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="submitted && f['description'].invalid"
+            placeholder="Describe the change in detail"></textarea>
+          <div class="text-red-500 text-sm mt-1" *ngIf="submitted && f['description'].errors">
+            <span *ngIf="f['description'].errors?.['required']">Description is required.</span>
+            <span *ngIf="f['description'].errors?.['minlength']">Description must be at least 20 characters.</span>
+          </div>
+        </div>
+
+        <!-- Business Justification Field -->
+        <div class="mb-6">
+          <label for="businessJustification" class="block text-sm font-medium text-gray-700 mb-2">Business Justification *</label>
+          <textarea
+            id="businessJustification"
+            formControlName="businessJustification"
+            rows="4"
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="submitted && f['businessJustification'].invalid"
+            placeholder="Explain the business need for this change"></textarea>
+          <div class="text-red-500 text-sm mt-1" *ngIf="submitted && f['businessJustification'].errors">
+            <span *ngIf="f['businessJustification'].errors?.['required']">Business justification is required.</span>
+            <span *ngIf="f['businessJustification'].errors?.['minlength']">Business justification must be at least 20 characters.</span>
+          </div>
+        </div>
+
+        <!-- Impact and Risk Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label for="impact" class="block text-sm font-medium text-gray-700 mb-2">Impact *</label>
+            <select
+              id="impact"
+              formControlName="impact"
+              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [class.border-red-500]="submitted && f['impact'].invalid">
+              <option value="">Select impact level</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
+            </select>
+            <div class="text-red-500 text-sm mt-1" *ngIf="submitted && f['impact'].errors">
+              <span *ngIf="f['impact'].errors?.['required']">Impact level is required.</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="risk" class="block text-sm font-medium text-gray-700 mb-2">Risk *</label>
+            <select
+              id="risk"
+              formControlName="risk"
+              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [class.border-red-500]="submitted && f['risk'].invalid">
+              <option value="">Select risk level</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
+            </select>
+            <div class="text-red-500 text-sm mt-1" *ngIf="submitted && f['risk'].errors">
+              <span *ngIf="f['risk'].errors?.['required']">Risk level is required.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Change Type and Proposed Schedule -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label for="changeType" class="block text-sm font-medium text-gray-700 mb-2">Change Type *</label>
+            <select
+              id="changeType"
+              formControlName="changeType"
+              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [class.border-red-500]="submitted && f['changeType'].invalid">
+              <option value="">Select change type</option>
+              <option value="standard">Standard</option>
+              <option value="normal">Normal</option>
+              <option value="emergency">Emergency</option>
+              <option value="major">Major</option>
+            </select>
+            <div class="text-red-500 text-sm mt-1" *ngIf="submitted && f['changeType'].errors">
+              <span *ngIf="f['changeType'].errors?.['required']">Change type is required.</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="proposedSchedule" class="block text-sm font-medium text-gray-700 mb-2">Proposed Schedule *</label>
+            <input
+              type="datetime-local"
+              id="proposedSchedule"
+              formControlName="proposedSchedule"
+              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [class.border-red-500]="submitted && f['proposedSchedule'].invalid" />
+            <div class="text-red-500 text-sm mt-1" *ngIf="submitted && f['proposedSchedule'].errors">
+              <span *ngIf="f['proposedSchedule'].errors?.['required']">Proposed schedule is required.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Document Attachment Section -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Supporting Documents (Optional)</label>
+          
+          <!-- Document Name Input -->
+          <div class="mb-3">
+            <input
+              type="text"
+              formControlName="documentName"
+              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter document name" />
+          </div>
+
+          <!-- File Upload -->
+          <div class="mb-3">
+            <input
+              type="file"
+              id="documentFile"
+              (change)="onFileSelected($event)"
+              multiple
+              class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+          </div>
+
+          <!-- Attached Files List -->
+          <div *ngIf="attachedFiles.length > 0" class="mt-3">
+            <h4 class="text-sm font-medium text-gray-700 mb-2">Attached Files:</h4>
+            <div class="space-y-2">
+              <div *ngFor="let file of attachedFiles; let i = index" 
+                   class="flex items-center justify-between bg-gray-50 p-2 rounded-md">
+                <span class="text-sm text-gray-700">{{ file.name }}</span>
+                <button
+                  type="button"
+                  (click)="removeFile(i)"
+                  class="text-red-500 hover:text-red-700 text-sm">
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-end space-x-4">
+          <button
+            type="button"
+            routerLink="/dashboard"
+            class="px-6 py-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors duration-200">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
+            Submit Change Request
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
