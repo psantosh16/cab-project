@@ -2,8 +2,9 @@
   "name": "pmo",
   "private": "true",
   "scripts": {
-    "frontend:dev": "npm -prefix frontend run start",
-    "backend:dev:mvn": "cd backend && mvnw spring-boot:run"
+    "frontend:dev": "npm --prefix frontend install && npm --prefix frontend run start",
+    "backend:dev:mvn": "cd backend && mvnw spring-boot:run",
+    "start": "concurrently \"npm run frontend:dev\" \"npm run backend:dev:mvn\""
   },
   "devDependencies": {
     "concurrently": "9.2.1"
