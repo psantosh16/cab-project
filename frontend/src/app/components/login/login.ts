@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 export class Login {
   loginForm: FormGroup;
   submitted = false;
+  backgroundImage = '/login/background.jpg';
+  logoImage = '/logo.png';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -28,7 +32,12 @@ export class Login {
       return;
     }
 
-    // Handle login logic here
-    console.log('Login successful', this.loginForm.value);
+    if (this.loginForm.value.email === 'admin@admin.com' && this.loginForm.value.password === 'admin@123') {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/login']);
+      alert('Invalid email or password');
+      this.loginForm.reset();
+    }
   }
 }
